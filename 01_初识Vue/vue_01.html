@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 准备一个容易 -->
+    <div id="root">
+        <h1>
+            hello,{{name}}
+        </h1>
+    </div>
+
+    <script>
+        // 设置为 false，阻止 vue 在启动时生成生产提示。
+        Vue.config.productionTip = false;
+
+
+        // 创建vue实例
+        const x= new Vue({
+            el: '#root',
+            data: {
+                name: '尚硅谷122331'
+            }
+            // data() {
+            //     return {
+                    
+            //     }
+            // },
+        });
+
+        // 配置对象的key不可以随意更改
+
+    </script>
+    
+</body>
+</html>
