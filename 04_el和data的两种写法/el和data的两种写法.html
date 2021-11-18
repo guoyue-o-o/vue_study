@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>data与el的两种写法</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+    data与el的两种写法
+        1.data
+            ①对象
+            ②函数式--组件式的时候必须用函数式
+        2.el
+            ①new Vue的时候配置el属性
+            ②先创建Vue实例vm，最后通过vm.$mount('#root')指定el的值
+        3.由Vue管理的函数，一定不要写箭头函数，否则this指向有问题（指向window）
+    -->
+
+    <div id="root">
+        <h1>
+            你好，{{name}}
+        </h1>
+
+    </div>
+
+    <script>
+        // 设置为 false，阻止 vue 在启动时生成生产提示。
+        Vue.config.productionTip = false;
+
+        // 一
+        // el的两种写法
+        /*  const v = new Vue({
+             // el: '#root', // 第1种写法
+             data: {
+                 name: '尚硅谷',
+             }
+         })
+ 
+         // 实例中带$的都是开发可以用的
+         console.log('================v=================== ', v);
+
+         // 第2种写法
+         setTimeout(() => {
+             // mount: 挂载
+             v.$mount('#root'); 
+         }, 2000) */
+
+
+
+        // 二
+        // data的两种写法
+        /*  new Vue({
+             el: '#root', // 第1种写法
+             // 第一种--不行--容易造成全局变量污染
+             // data: {
+             //     name: '尚硅谷',
+             // },
+             // 第二种--必须这样写（普通函数）
+             data() {
+                 console.log('================this=================== ',this);
+                 return {
+                     name: '尚硅谷',
+                 }
+             }
+         }) */
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+
+    <!-- 
+        总结：
+        vue模板语法有两大类：
+            1.插值语法：
+                功能：
+                    用于解析标签体内容
+                写法：
+                    {{xxx}},xxx是js表达式，读取data中的属性
+            2.指令语法:
+                功能：
+                    用于解析标签（标签属性，标签体内容，绑定事件....）
+                举例：
+                    v-bind:href='xxxx' =====> :href='xxx',xxxx同样要写js表达式，且可以读取到data中属性
+                备注：
+                    Vue中有很多指令是v-xxxx，比如v-if
+     -->
+
+    <div id="root">
+        <h1>插值语法</h1>
+        <h3>
+            插值语法 {{name}}
+        </h3>
+        <hr>
+        </hr>
+        <h1>指令语法</h1>
+        <a :href="school.url">小写---点击去尚硅谷</a>
+        <br>
+        <a :href="school.url.toUpperCase()">大写---点击去{{school.name}}</a>
+
+    </div>
+
+    <script>
+        // 设置为 false，阻止 vue 在启动时生成生产提示。
+        Vue.config.productionTip = false;
+
+        new Vue({
+            el: '#root',
+            data: {
+                name: '测试',
+                school: {
+                    url: 'http://www.atguigu.com',
+                    name: '尚硅谷'
+                }
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>
