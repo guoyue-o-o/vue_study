@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件处理</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        button {
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 
+        总结：
+            事件的基本使用：
+                1.使用 v-on:xxxx 或 @xxx 绑定事件，xxx是事件名
+                2.事件的回调需要在methods中定义，最终会在vm上
+                3.methods中配置的函数，不要使用箭头函数，会导致this不是指向vm
+                4.methods中配置的函数都是被Vue管理的函数，this的指向是vm 或 组件实例对象
+                5.@click='demo' 和 @click='demo($event)' 一样，后者可以传参 
+    -->
+
+    <div id="root">
+        <h1>
+            事件处理
+        </h1>
+        <button v-on:click='showInfo1'>
+            点击我11
+        </button>
+        <!-- 传参需要加括号 -->
+        <!-- $event占位符，接收的顺序和传参顺序一致就行 -->
+        <button @click='showInfo2(5555, $event)'>
+            点击我22
+        </button>
+        <button @click='showInfo2($event, "哈哈哈")'>
+            点击我33
+        </button>
+    </div>
+
+    <script>
+        // 设置为 false，阻止 vue 在启动时生成生产提示。
+        Vue.config.productionTip = false;
+
+
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                name: '尚硅谷',
+                address: '北京'
+            },
+            methods: {
+                showInfo1(event) {
+                    console.log(event)
+                },
+                showInfo2(number, event) {
+                    console.log(number, event)
+                }
+            },
+
+        })
+
+    </script>
+
+</body>
+
+</html>
