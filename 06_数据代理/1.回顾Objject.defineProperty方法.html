@@ -19,12 +19,13 @@
     -->
 
     <script>
+
+        console.log('示例1================================================================================================================== ');
         let number = 19;
         let person = {
             name: '张三',
             sex: '男',
         }
-
         // Object.defineProperty(obj, prop, desc)
         // 通过这种方式不可以随意更改、删除、枚举，需要设置相关属性
         Object.defineProperty(person, 'age', {
@@ -33,21 +34,19 @@
             // writable: true, // 控制属性是否可以被修改，默认是false
             // configurable: true // 控制属性是否可以被删除，默认是false
 
-            // 注意：
-            // 描述符中不可以同时拥有value, writable, configurable, enumerable, 同时使用会报错 
-
             get() { // 当有人读取person的age属性的时候，get函数就被调用，且返回值就是age
-                console.log('================读取age属性=================== ');
+                // this指向person
+                console.log('================读取age属性了=================== ', 'this指向===>', this);
                 return number;
             },
-            
+
             set(value) { // 当修改age属性时，set函数（setter)就会被调用，且会收到修改的具体值
                 console.log('================修改age属性，且值是=================== ', value);
                 console.log('================value=================== ', value);
                 number = value;
-
             }
         })
+        console.log('================person=================== ', person);
 
         /*  
         enumerable:
@@ -62,12 +61,16 @@
              } 
          */
 
-        console.log('================person=================== ', person);
 
 
+
+
+         console.log('示例2================================================================================================================== ');
         // Object.defineProperty 给对象定义一个属性
         let student = {}
         Object.defineProperty(student, 'name', {
+            // 注意：
+            // 描述符中不可以同时拥有 get, writable, set，同时使用会报错 
             enumerable: true,
             // writable: true,
             get() {
@@ -80,16 +83,16 @@
         })
         console.log('================student=================== ', student);
 
-        // (enumerable默认为false，不可枚举)
-        // ================Object.keys(student)===================  []
-        console.log('================Object.keys(student)=================== ', Object.keys(student));
-
-        // enumerable: true, 可以访问key
-        // ================Object.keys(student)===================  ['name']
-        console.log('================Object.keys(student)=================== ', Object.keys(student));
+        // (enumerable默认为false，不可枚举) Object.keys(student)=[]
+        // enumerable: true, 可以访问key Object.keys(student)=['name']
+        console.log('================Object.keys(student)=================== ', Object.keys(student)); // ================Object.keys(student)===================  []
 
 
-        // get(), set() 可以直接在对象中国使用，
+
+
+
+        console.log('示例3================================================================================================================== ');
+        // get(), set() 可以直接在对象中使用，
         // price 为属性值
         let book = {
             tempVal: '小王子',
@@ -98,12 +101,12 @@
                 return this.tempVal;
             },
             set price(newVal) {
-                console.log('================set=================== ',newVal);
+                console.log('================set=================== ', newVal);
                 this.tempVal = newVal;
             }
         }
         book.price = 60
-        console.log('================book=================== ',book);
+        console.log('================book=================== ', book);
 
     </script>
 
