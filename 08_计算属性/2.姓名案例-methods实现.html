@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.姓名案例-methods实现</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="root">
+        姓：<input type="text" v-model="firstName" />
+        <br /> <br />
+        姓：<input type="text" v-model="lastName" />
+        <br /> <br />
+
+        <!--fullName()出现几次就调用几次（与计算属性相比，没有缓存） -->
+        姓名：<span>{{fullName()}}</span>
+        姓名：<span>{{fullName()}}</span>
+        姓名：<span>{{fullName()}}</span>
+        姓名：<span>{{fullName()}}</span>
+        姓名：<span>{{fullName()}}</span>
+    </div>
+
+    <script>
+        // 设置为 false，阻止 vue 在启动时生成生产提示。
+        Vue.config.productionTip = false;
+
+        new Vue({
+            el: '#root',
+            data: {
+                firstName: '张',
+                lastName: '三',
+            },
+            methods: {
+                fullName() {
+                    console.log('================读取methods=================== ');
+                    return this.firstName + '--' + this.lastName;
+                }
+            },
+        })
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.键盘事件</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+     
+    <div id="root">
+        <h1>
+            欢迎来到{{name}}学习
+        </h1>
+
+        <!-- enter 键盘名称去绑定事件 -->
+        <input type="text" placeholder="按回车提示输入" @keyup.enter='showInfo' />
+
+        <!-- Vue自定义键盘名称 -->
+        <input type="text" placeholder="按回车提示输入" @keyup.huiche='showInfo' />
+
+    </div>
+
+    <script>
+        // 设置为 false，阻止 vue 在启动时生成生产提示。
+        Vue.config.productionTip = false;
+
+        // Vue 定义别名按键
+        Vue.config.keyCode.huiche = 13;
+
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                name: '尚硅谷',
+                address: '北京',
+
+            },
+            methods: {
+                showInfo(e) {
+                    // 13：enter键码
+                    if(e.keyCode !== 13) {
+                        console.log('================e.target.value=================== ',e.target.value);
+                    }
+                    console.log('================e.keyCode=================== ',e.keyCode);
+                }
+            },
+        })
+
+    </script>
+
+</body>
+
+</html>

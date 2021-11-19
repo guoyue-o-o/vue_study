@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -8,15 +7,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2.事件修饰符</title>
     <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box1 {
+            background-color: aquamarine;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .box2 {
+            background-color: tomato;
+            padding: 10px;
+        }
+        .selfClass {
+            background-color: turquoise;padding: 10px;margin-top: 30px;
+        }
+        .list {
+            height: 200px;
+            background-color: chocolate;
+            width: 300px;
+            overflow: auto;
+        }
+        .list2 {
+            height: 200px;
+            width: 300px;
+            overflow: auto;
+            background-color: slateblue;
+            margin-top: 30px;
+        }
+        li {
+            height: 100px;
+        }
+        hr {
+            margin-top: 100px;
+            height: 10px;
+            background-color: salmon;
+        }
+
+    </style>
 </head>
 
 <body>
     <!-- 
-       
-    -->
-
+        Vue事件修饰符：
+            1.prevent: 阻止默认事件（常用）
+            2.stop: 阻止默认事件（常用）
+            3.once: 事件只触发一次（常用）
+            4.capture: 事件捕获方式
+            5.self: 只有使用event.target是当前操作的元素时才触发事件
+            6.passive: 事件的默认行为立即执行，无需等待事件回调执行完毕
+     -->
+     
     <div id="root">
-       
+        <h1>
+            欢迎来到{{name}}学习
+        </h1>
+        <!-- prevent 事件修饰符 -->
+
+        <!-- 阻止默认事件 -->
+        <a href="http://atguigu.com" @click.prevent='showInfo'>
+            提示信息
+        </a>
+        <hr></hr>
+
+        <!-- 阻止事件冒泡 -->
+        <div style="background-color: pink;padding: 10px;" @click='showInfo'>
+            <button @click.stop='showInfo'>
+                冒泡
+            </button>
+            <!-- 先阻止冒泡再阻止默认行为 -->
+            <a href="http://atguigu.com" @click.stop.prevent='showInfo'>
+                冒泡
+            </a>
+             <!-- 先阻止默认行为再阻止冒泡 -->
+             <a href="http://atguigu.com" @click.prevent.stop='showInfo'>
+                冒泡
+            </a>
+        </div>
+
+        <hr></hr>
+
+        <!-- 事件只触发一次 -->
+        <button @click.once='showInfo'>
+            只触发一次
+        </button>
+
+        <hr></hr>
+
+        <!-- 捕获阶段： 从外到内  冒泡阶段：从内到外  先捕获再冒泡-->
+        <!-- 使用事件的捕获模式 -->
+        <div class="box1" @click.capture='showMsg(1)'>
+            div1--捕获
+            <div class="box2" @click='showMsg(2)'>
+                div2--捕获
+            </div>
+        </div>
+
+        <hr></hr>
+
+        <!-- 只有event.target是当前操作的元素时，才触发事件 -->
+        <div class="selfClass" @click.self='showInfo'>
+            <button @click='showInfo'>
+                提示信息
+            </button>
+        </div>
+
+        <hr></hr>
+
+        <!-- 滚动条滑动到最底部最顶部，就不会再触发 -->
+        <ul class="list" @scroll='demo'>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+
+        <!-- 只要鼠标滚动，就会触发demo事件 -->
+        <!-- passive: 事件的默认行为立即执行， 无需等待事件回调执行完毕 -->
+        <ul class="list2" @wheel.passive='demo'>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+
     </div>
 
     <script>
@@ -29,7 +145,25 @@
                 name: '尚硅谷',
                 address: '北京',
 
-            }
+            },
+            methods: {
+                showInfo(e) {
+                    alert('你好')
+                    console.log('================e.target=================== ',e.target);
+                },
+                showMsg(num) {
+                    console.log('================num=================== ',num);
+
+                },
+                demo(msg) {
+                    // wheel事件的执行顺序： 先执行回调，执行完回调之后，再触发滚轮事件（滚轮位置滑动）
+                    for (let index = 0; index < 100000; index++) {
+                        console.log('================@=================== ',);
+                    }
+                    console.log('================事件执行完毕=================== ');
+
+                }
+            },
         })
 
     </script>
