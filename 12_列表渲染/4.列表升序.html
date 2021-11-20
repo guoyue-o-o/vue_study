@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4.列表升序</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        li {
+            /* list-style: none; */
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        input {
+            padding: 5px 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <h2>
+            人员列表
+        </h2>
+        <input type="text" v-model='keyWord' placeholder="请输入搜索关键词" />
+        <button @click='sortType = 2'>年龄升序</button>
+        <button @click='sortType = 1'>年龄降序</button>
+        <button @click='sortType = 0'>原顺序</button>
+        <ul>
+            <li v-for='(p, index) in filtPersons' :key='p.id'>
+                姓名：{{p.name}}
+                年龄：{{p.age}}
+                <input type="text" />
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        // 设置为 false，阻止 vue 在启动时生成生产提示。
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                keyWord: '',
+                sortType: 0, // 原顺序
+                persons: [
+                    {
+                        id: '001',
+                        name: '马冬梅',
+                        age: 48
+                    },
+                    {
+                        id: '002',
+                        name: '周冬雨',
+                        age: 28
+                    },
+                    {
+                        id: '003',
+                        name: '周杰伦',
+                        age: 68
+                    },
+                    {
+                        id: '004',
+                        name: '温兆伦',
+                        age: 18
+                    },
+                ],
+            },
+
+            // 页面初始化调用一次，keyWord变化时调用
+            computed: {
+                filtPersons() {
+                    const arr = this.persons.filter(v => v.name.indexOf(this.keyWord) != -1);
+                    // 判断是不是需要排序
+                    if (this.sortType) {
+                        arr.sort((a, b) => {
+                            return this.sortType == 1 ? b.age - a.age : a.age - b.age
+                        })
+                    }
+                    return arr;
+                }
+            },
+        })
+
+
+
+        // sort 方法改变原数组
+        let arr = [9, 2, 4, 1, 0, 6]
+        arr.sort((a, b) => {
+            // 升序
+            // return a-b;
+            // 降序
+            return b - a;
+        })
+        console.log('================arr=================== ', arr);
+    </script>
+
+</body>
+
+</html>
