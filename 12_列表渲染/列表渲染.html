@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        li {
+            /* list-style: none; */
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 
+        总结：
+            v-for指令：
+                1.用于展示列表数据
+                2.语法：v-for='(item, index) in xxx' :key='唯一'
+                3.可遍历：数组，对象，字符串（不常用），指定次数（不常用）
+    -->
+
+    <div id="root">
+        <h2>
+            人员列表--遍历数组--(常用)
+        </h2>
+        <!-- key 的特殊 attribute 主要用在 Vue 的虚拟 DOM 算法，在新旧 nodes 对比时辨识 VNodes -->
+        <!-- 有相同父元素的子元素必须有独特的 key。重复的 key 会造成渲染错误。 -->
+        <!-- 可以用于强制替换元素/组件 -->
+        <ul>
+            <li v-for='(p, index) in persons' :key='p.id'>
+                {{index}} 姓名：{{p.name}}
+                <br>
+                年龄：{{p.age}}
+            </li>
+        </ul>
+        <!-- 当 text 发生改变时，<span> 总是会被替换而不是被修改，因此会触发过渡。 -->
+        <transition>
+            <span :key="text">{{ text }}</span>
+        </transition>
+
+
+        <h2>
+            汽车信息--遍历对象
+        </h2>
+        <ul>
+            <!-- 奔驰name0 -->
+            <li v-for='(value, k) in carObj' :key='k'>
+                {{k}}---{{value}}
+            </li>
+        </ul>
+
+
+        <h2>
+            遍历字符串
+        </h2>
+        <ul>
+            <!-- 0---钞 1---票 -->
+            <li v-for='(value, index) in str' :key='index'>
+                {{index}}---{{value}}
+            </li>
+        </ul>
+
+
+        <h2>
+            遍历指定次数
+        </h2>
+        <ul>
+            <li v-for='(number, index) in 5' :key='index'>
+                {{index}}---{{number}}
+            </li>
+        </ul>
+
+
+    </div>
+
+    <script>
+        // 设置为 false，阻止 vue 在启动时生成生产提示。
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                text: '我是text',
+                persons: [
+                    {
+                        id: '001',
+                        name: '张三',
+                        age: 18
+                    },
+                    {
+                        id: '002',
+                        name: '李四',
+                        age: 20
+                    },
+                    {
+                        id: '003',
+                        name: '王五',
+                        age: 22
+                    },
+                ],
+                carObj: {
+                    name: '奔驰',
+                    price: '50w',
+                    color: '红色',
+                },
+                str: '钞票才是梦想'
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>
