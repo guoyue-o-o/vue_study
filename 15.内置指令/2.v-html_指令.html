@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内置指令</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript" src="../js/dayjs.min.js"></script>
+</head>
+
+<body>
+    <!-- 
+     -->
+
+    <div id="root">
+        <!-- 插值与法 -->
+        <h1>{{msg}}，</h1>
+
+        <!-- 认为都是文本 -->
+        <h1 v-text='msg'></h1>
+
+        <!-- 可以解析html标签 -->
+        <div v-html='msg2'></div>
+    </div>
+
+    <script>
+        // 设置为 false，阻止 vue 在启动时生成生产提示。
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                time: 1621561377603, // 时间戳
+                msg: '尚硅谷',
+                msg2: '<h1 style="color: red">我是标题1</h1>'
+            },
+        })
+
+    </script>
+
+</body>
+
+</html>

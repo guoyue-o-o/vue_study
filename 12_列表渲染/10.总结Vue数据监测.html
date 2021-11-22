@@ -113,10 +113,14 @@
             },
             methods: {
                 addSex() {
+                    // set 是Vue提供的
                     Vue.set(this.student, 'sex', '男');
                 },
                 changeSex() {
-                    Vue.set(this.student, 'sex', '女');
+                    // $set，（$watch）是vue实例对象身上的方法
+                    this.$set(this.student, 'sex', '女');
+                    // 或
+                    // Vue.set(this.student, 'sex', '女');
                 },
                 addFriend() {
                     // this 指向vue实例vm
