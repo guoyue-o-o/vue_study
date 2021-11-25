@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7.模拟一个数据监测</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+    <script>
+        // 设置为 false，阻止 vue 在启动时生成生产提示。
+        Vue.config.productionTip = false;
+
+        // let data = {
+        //     name: '尚硅谷',
+        //     address: '北京'
+        // }
+        // let temp = '尚硅谷';
+        // setInterval(() => {
+        //     if (data.name !== temp) {
+        //         temp = data.name;
+        //         console.log('================name被改了=================== ');
+        //     }
+        // }, 200)
+
+        const vm = new Vue();
+        let data = {
+            name: '尚硅谷',
+            address: '北京',
+            a: {
+                id: 1
+            }
+        }
+
+        // 创建一个监视的实例对象，用于监视data中属性的变化
+        const obs = new Observer(data);
+        console.log('================obs=================== ', obs);
+
+        // 准备一个vm实例对象
+        vm._data = data = obs;
+
+        // 构造函数
+        function Observer(obj) {
+            // 汇总对象中所有属性形成一个数组
+            const keys = Object.keys(obj);
+            // 遍历---这里只考虑一层
+            // vue用了递归，一直寻找
+            keys.forEach(k => {
+                Object.defineProperty(this, k, {
+                    get() {
+                        return obj[k]
+                    },
+                    set(val) {
+                        console.log(`${k}被修改了，我要去解析。。`);
+                        obj[k] = val;
+                    }
+                })
+            })
+        }
+
+    </script>
+
+</body>
+
+</html>

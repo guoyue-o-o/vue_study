@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        div {
+            font-size: 25px;
+        }
+
+        .test {
+            width: 200px;
+            height: 200px;
+            margin: 20px;
+            background-color: tomato;
+        }
+
+        .test1 {
+            color: yellowgreen;
+            text-align: center;
+        }
+
+        .test2 {
+            border-radius: 10px;
+        }
+
+        .test2 {
+            border: 10px solid rgb(177, 114, 250);
+        }
+
+        .basic2 {
+
+            background-color: red;
+        }
+
+        .basic1 {
+            border: 10px solid green;
+        }
+
+        .basic {
+            width: 400px;
+            height: 400px;
+            margin: 20px;
+            background-color: slateblue;
+        }
+    </style>
+</head>
+
+<body>
+    <!--
+        绑定样式总结：
+        1.class样式
+            写法：class='xxx' xxx可以是字符串、对象、数组
+                字符串写法适用于：类名不确定，要动态获取
+                对象写法适用于：要绑定多个样式，个数不确定，名字也不确定
+                数组写法适用于：要绑定多个样式，个数确定，名字也确定，但是不确定用不用
+        2.style样式
+            :style="{fontSize:xxx}"其中xxx是动态值
+            :style="[obj1, obj2]",其中obj1,obj2是样式对象
+     -->
+
+    <div id="root">
+
+        <!-- 绑定样式--class -->
+
+        <!-- 字符串写法----适用于：样式的类名不确定，需要动态指定 -->
+        <div class="test" :class='mood' @click='changeMode'>字符串写法--test1</div>
+
+        <!-- 数组写法-----适用于：要绑定的样式个数不确定，名字也不确定 -->
+        <div class="test" :class='classArr' @click='changeMode'>数组写法--test2_1</div>
+        <!-- 不推荐 -->
+        <div class="test" :class='["test1", "test2", "test3"]' @click='changeMode'>数组写法--test2_2</div>
+
+        <!-- 对象写法----适用于：要绑定的样式个数确定，名字也确定，但是要动态决定用不用 -->
+        <div class="basic" :class='classObj'>对象写法--{{name}}</div>
+        <!-- 不推荐 -->
+        <div class="basic" :class='{basic1: true, basic2: false}'>对象写法--{{name}}</div>
+
+
+        <!-- 绑定style -->
+        <div class="basic" :style="styleObj">绑定style</div>
+        <!-- 不推荐--对象 -->
+        <div class="basic" :style="{fontSize: fz40 + 'px'}">绑定style--对象写法</div>
+        <!-- 不推荐--数组 -->
+        <div class="basic" :style="[styleObj, styleObj2]">绑定style--数组写法</div>
+        <!-- 不常用 -->
+        <div class="basic" :style="styleArr">绑定style--数组写法</div>
+
+    </div>
+
+    <script>
+        // 设置为 false，阻止 vue 在启动时生成生产提示。
+        Vue.config.productionTip = false;
+
+        new Vue({
+            el: '#root',
+            data: {
+                name: '尚硅谷',
+                mood: '',
+                classArr: ['test1', 'test2', 'test3'],
+                classObj: {
+                    basic1: false,
+                    basic2: false,
+                },
+                fz40: 40,
+                styleObj: {
+                    fontSize: '70px'
+                },
+                styleObj2: {
+                    borderRadius: '30px'
+                },
+                styleArr: [
+                    {
+                        borderRadius: '30px',
+                    },
+                    {
+                        fontSize: '70px'
+                    },
+                ]
+
+            },
+            methods: {
+                changeMode() {
+                    alert(111)
+                    const arr = ['test1', 'test2', 'test3'];
+                    // Math.random()  接近1，但是不等于1
+                    const index = Math.floor(Math.random() * 3)
+                    this.mood = arr[index];
+                    this.classArr.splice(index, 1)
+                }
+            },
+        })
+
+    </script>
+
+</body>
+
+</html>

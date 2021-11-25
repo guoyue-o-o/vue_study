@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10.总结Vue数据监测</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        button {
+            padding: 5px 10px;
+            background-color: pink;
+            margin: 10px;
+            font-size: 20px;
+            display: block;
+        }
+
+        li {
+            padding: 5px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 总结：
+            1.Vue会监测data中所有层次的数据
+
+            2.如何监测对象中的数据？
+                通过setter实现监视，且要new Vue时就传入要监测的数据
+                    （1）对象中后追加的属性，Vue默认不做响应式处理
+                    （2）如需后续给添加的属性做响应式，请使用以下api:
+                        Vue.set(target, propertyName/index, value)
+                        vm.$set(target, propertyName/index, value)
+            
+            3.如何监测数组中的数据？
+                通过包裹数组更新元素的方法实现，本质就是：
+                    （1）调用原生对应的方法对数组进行更新
+                    （2）重新解析模板，之后更新页面
+
+            4.在Vue中修改数组中的某个元素：
+                1.使用：push, pop, shift, unshift, splice, reverse, pop
+                2.Vue.set()、vm.$set()
+                3.filter()、concat() 和 slice()。它们不会变更原始数组，而总是返回一个新数组。当使用非变更方法时，可以用新数组替换旧数组：
+            
+            
+            特别注意：
+                Vue.set()、vm.$set()的target不能是 vm 或 vm的跟数据对象（vm._data）上 添加属性
+
+     -->
+
+    <div id="root">
+
+        <h1>
+            学生信息
+        </h1>
+
+        <button @click='student.age++'>年龄+1</button>
+        <button @click='addSex'>添加性别属性-男 </button>
+        <button @click='changeSex'>修改性别</button>
+        <button @click='addFriend'>列表第一位添加一个朋友</button>
+        <button @click='updateFirstFriendName'>更改第一个朋友的名字</button>
+        <button @click='addHobby'>添加爱好</button>
+        <button @click='changeHobby'>更改爱好</button>
+        <button @click='removeHobby'>移除羽毛球</button>
+
+
+        <h2>
+            姓名：{{student.name}}
+        </h2>
+        <h2>
+            学生年龄: {{student.age}}
+        </h2>
+        <h2 v-if='student.sex'>
+            性别: {{student.sex}}
+        </h2>
+
+        <h2>
+            爱好
+        </h2>
+        <ul>
+            <li v-for='h in student.hobby'>
+                {{h}}
+            </li>
+        </ul>
+        <h2>朋友们</h2>
+        <ul>
+            <li v-for='f in student.friends'>
+                {{f.name}}----{{f.age}}
+            </li>
+        </ul>
+
+    </div>
+
+    <script>
+        // 设置为 false，阻止 vue 在启动时生成生产提示。
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                student: {
+                    name: '张三',
+                    age: 12,
+                    friends: [
+                        { name: 'jerry', age: 12 },
+                        { name: 'tom', age: 12 },
+                        { name: '小红', age: 12 },
+                    ],
+                    hobby: ['篮球', '排球', '羽毛球']
+                }
+            },
+            methods: {
+                addSex() {
+                    // set 是Vue提供的
+                    Vue.set(this.student, 'sex', '男');
+                },
+                changeSex() {
+                    // $set，（$watch）是vue实例对象身上的方法
+                    this.$set(this.student, 'sex', '女');
+                    // 或
+                    // Vue.set(this.student, 'sex', '女');
+                },
+                addFriend() {
+                    // this 指向vue实例vm
+                    this.student.friends.unshift({
+                        name: '我是新加的',
+                        age: 13
+                    })
+                },
+                updateFirstFriendName() {
+                    this.student.friends[0].name = '我被修改了';
+                    this.student.friends[0].age = 22;
+                },
+                addHobby() {
+                    this.student.hobby.push('我是添加的爱好')
+                },
+                changeHobby() {
+                    Vue.set(this.student.hobby, 0, '我是修改的爱好');
+                    // this.student.hobby.splice(0, 1, '我是修改的爱好')
+                    // vm.student.hobby.splice(0, 1, '我是修改的爱好')
+                },
+                removeHobby() {
+                    // filter()、concat() 和 slice()。它们不会变更原始数组，而总是返回一个新数组。当使用非变更方法时，可以用新数组替换旧数组：
+                    // 直接替换掉整个数组
+                    this.student.hobby = this.student.hobby.filter(v => v != '羽毛球')
+                }
+            },
+        })
+
+    </script>
+
+</body>
+
+</html>

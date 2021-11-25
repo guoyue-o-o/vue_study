@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.key的原理</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        li {
+            list-style: none;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 
+        面试题：react和vue中的key有啥作用？（key的内部原理）
+
+        1.虚拟dom中key的作用
+            key是虚拟dom对象标识，当状态中的数据发生变化时，vue会根据【新数据】生成【新的虚拟dom】，
+            随后，vue进行【新旧虚拟dom】的差异比较，比较规则如下：
+
+
+        2.对比规则：
+            （1）旧虚拟dom中找到了与新虚拟dom相同的key:
+                ①若虚拟dom中内容没变，直接使用页面中的真实dom
+                ②若虚拟dom内容变了，则生成新的真实dom，随后替换掉页面中之前的真实dom
+
+            （2）旧虚拟dom未找到与新虚拟dom相同的key
+                创建新的真实dom，随后渲染到页面
+
+
+        3.用index作为key可能会引发的问题：
+            1.若对数据进行：逆序添加，逆序删除等破坏顺序性操作
+                会产生没有必要的真实dom的更新《======》界面没有效果，但是效率低
+
+            2.如果结构中包含有输入类的dom
+                会产生错误dom更新《=======》界面显示有问题
+
+
+        4.开发中如何选择key:
+            （1）最好使用每条数据的唯一标识作为key,比如id,手机号，身份照号，学号
+
+            （2）若果不存在对数据进行逆序添加，逆序删除等破坏顺序性操作，仅仅用于列表渲染，可以使用index作为key
+
+    -->
+
+    <div id="root">
+
+        <h2>
+            人员列表--遍历数组--(常用)
+        </h2>
+        <button @click='add'>
+            添加一个人员
+        </button>
+        <ul>
+            <!-- key是vue内部使用的，真实dom不会显示key，虚拟dom显示ley -->
+            <li v-for='(p, index) in persons' :key='p.id'>
+                {{index}} 姓名：{{p.name}}
+                <br>
+                年龄：{{p.age}}
+                <input ></input>
+            </li>
+        </ul>
+
+    </div>
+
+    <script>
+        // 设置为 false，阻止 vue 在启动时生成生产提示。
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                text: '我是text',
+                persons: [
+                    {
+                        id: '001', // 一般是数据库生成的id
+                        name: '张三',
+                        age: 18
+                    },
+                    {
+                        id: '002',
+                        name: '李四',
+                        age: 20
+                    },
+                    {
+                        id: '003',
+                        name: '王五',
+                        age: 22
+                    },
+                ],
+            },
+            methods: {
+                add() {
+                    const p = {
+                        id: '004',
+                        name: '刘亦菲',
+                        age: 24
+                    }
+                    // 向数组头部添加（破坏了数据结构）
+                    this.persons.unshift(p)
+                }
+            },
+        })
+
+    </script>
+
+</body>
+
+</html>

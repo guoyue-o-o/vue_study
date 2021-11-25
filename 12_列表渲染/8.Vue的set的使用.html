@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8.Vue的set的使用</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+
+    <!-- 
+        1.操作数组的方法：
+            改变数组本身： push, pop, shift, unshift, sort, splice, reverse
+
+        2.vue对数组的监测，实际上是对数组原型对象上的方法做了处理：
+        vm._data.student.hobby.push === Array.prototype
+        false
+        
+        3.Vue 将被侦听的数组的变更方法进行了包裹，所以它们也将会触发视图更新。
+            这些被包裹过的方法包括：
+                push()
+                pop()
+                shift()
+                unshift()
+                splice()
+                sort()
+                reverse()
+     -->
+
+    <div id="root">
+
+        <h1>
+            学生信息
+        </h1>
+
+        <h2>
+            学生姓名：{{student.name}}
+        </h2>
+        <h2>
+            学生年龄：真实年龄： {{student.age.rAge}}，对外年龄： {{student.age.sAge}}
+        </h2>
+        <ul>
+            <li v-for='f in student.friends'>
+                {{f.name}}----{{f.age}}
+            </li>
+        </ul>
+
+        <hr />
+        <button @click='addHobby'>
+            添加一个爱好
+        </button>
+        <button @click='changeHobby'>
+            改变爱好
+        </button>
+        <ul>
+            <li v-for='h in student.hobby'>
+                {{h}}
+            </li>
+        </ul>
+
+    </div>
+
+    <script>
+        // 设置为 false，阻止 vue 在启动时生成生产提示。
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                name: '尚硅谷',
+                address: '北京',
+                student: {
+                    name: '张三',
+                    age: {
+                        rAge: 15,
+                        sAge: 13,
+                    },
+                    friends: [
+                        { name: 'jerry', age: 12 },
+                        { name: 'tom', age: 12 },
+                    ],
+                    hobby: ['喝酒', '吸烟'],
+                }
+            },
+            methods: {
+                addHobby() {
+                    this.student.hobby.push('我是push的爱好')
+                },
+                changeHobby() {
+                    // 2叔数组index
+                    this.$set(this.student.hobby, 2, '学习')
+                }
+            },
+        })
+
+    </script>
+
+</body>
+
+</html>
