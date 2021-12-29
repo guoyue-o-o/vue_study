@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.回顾一个dom操作</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+        需求：
+     -->
+
+    <div id="root">
+
+        <h1>
+            {{n}}
+        </h1>
+        <h1 v-big='n'>
+        </h1>
+        <!-- <h1 v-big-number='n'>
+        </h1> -->
+
+        <button @click='n++'>
+            n++
+        </button>
+
+        <input type='text' v-fbind:value='n' />
+
+    </div>
+
+    <div id="root2">
+        <input type='text' v-fbind:value='x' />
+    </div>
+
+
+    <script>
+        // 设置为 false，阻止 vue 在启动时生成生产提示。
+        Vue.config.productionTip = false;
+
+        // 定义全局指令
+        Vue.directive('fbind', {
+            // 指令与元素成功绑定时（一上来）
+            bind(element, binding) {
+                console.log('================bind=================== ', this);
+                element.value = binding.value;
+            },
+
+            // 用于特殊需求：
+            // 获取父元素，获得焦点
+
+            // 指令所在元素被插入到页面时
+            inserted(element, binding) {
+                console.log('================inserted=================== ', this);
+                element.focus()
+            },
+            // 指令所在的模板被重新解析时
+            update(element, binding) {
+                console.log('================update=================== ', this);
+                element.value = binding.value;
+            },
+        })
+
+
+        new Vue({
+            el: '#root',
+            data: {
+                n: 1,
+            },
+
+            // 局部指令
+            // 注意：！！！！！directives中的this全部指向window
+
+            // 定义的执行
+            directives: {
+
+                // big函数啥时候调用？1.指令与元素成功绑定的时候（初始化时）2.指令所在的模板被重新解析时
+                big(element, binding) {
+                    // console.log('================big=================== ', this);
+                    // console.log('111', element, binding);
+                    element.innerText = binding.value * 100
+                },
+                // 可以这么写
+                // 'big-number'(element, binding) {
+                //     console.log('111', element, binding);
+                //     element.innerText = binding.value * 100
+                // },
+                // fbind(element, binding) {
+                //     element.value = binding.value;
+                //     element.focus()
+                // },
+                // fbind: {
+                    // // 指令与元素成功绑定时（一上来）
+                    // bind(element, binding) {
+                    //     console.log('================bind=================== ', this);
+                    //     element.value = binding.value;
+                    // },
+
+                    // // 用于特殊需求：
+                    // // 获取父元素，获得焦点
+
+                    // // 指令所在元素被插入到页面时
+                    // inserted(element, binding) {
+                    //     console.log('================inserted=================== ', this);
+                    //     element.focus()
+                    // },
+                    // // 指令所在的模板被重新解析时
+                    // update(element, binding) {
+                    //     console.log('================update=================== ', this);
+                    //     element.value = binding.value;
+                    // },
+                // },
+
+            }
+        })
+
+        
+        new Vue({
+            el: '#root2',
+            data: {
+                x: 22,
+            },
+        })
+
+    </script>
+
+</body>
+
+</html>

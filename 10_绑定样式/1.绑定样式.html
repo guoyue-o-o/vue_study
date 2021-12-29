@@ -47,6 +47,12 @@
             margin: 20px;
             background-color: slateblue;
         }
+
+        .bg-box {
+            height: 200px;
+            width: 200px;
+            background-color: brown;
+        }
     </style>
 </head>
 
@@ -87,8 +93,13 @@
         <div class="basic" :style="{fontSize: fz40 + 'px'}">绑定style--对象写法</div>
         <!-- 不推荐--数组 -->
         <div class="basic" :style="[styleObj, styleObj2]">绑定style--数组写法</div>
-        <!-- 不常用 -->
-        <div class="basic" :style="styleArr">绑定style--数组写法</div>
+        <!-- 动态背景图片 -->
+        <div class="bg-box" :style="{
+            'background-image': `url(${imgSrc})`,
+            'background-size': `100%`,
+          }">绑定style--背景图片</div>
+
+        <img class="bg-box" src="../images/l1.jpg" />
 
     </div>
 
@@ -113,15 +124,17 @@
                 styleObj2: {
                     borderRadius: '30px'
                 },
-                styleArr: [
-                    {
+                styleArr: [{
                         borderRadius: '30px',
                     },
                     {
                         fontSize: '70px'
                     },
-                ]
-
+                ],
+                imgSrc: '../images/l1.jpg'
+            },
+            mounted() {
+                console.log('imgSrc=================>', this.imgSrc);
             },
             methods: {
                 changeMode() {
@@ -134,7 +147,6 @@
                 }
             },
         })
-
     </script>
 
 </body>
