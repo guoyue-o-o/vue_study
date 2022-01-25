@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+
+        1.VueComponent 实际是构造函数
+        VueComponent.prototype._proto_ = Vue.prototype
+
+
+        Vue.prototype==vm._proto_
+        对象才会有隐式原型对象
+
+
+
+     -->
+
+    <div id="root">
+
+    </div>
+
+    <script>
+        // 设置为 false，阻止 vue 在启动时生成生产提示。
+        Vue.config.productionTip = false;
+
+        const school = Vue.extend({
+            name: 'school',
+            template: '<h1>哈哈哈哈哈</h1>'
+        })
+
+        console.log(new Vue(), 222)
+        console.log('--------Vue.prototype', Vue.prototype);
+        
+
+
+
+        // 创建vm
+        const vm = new Vue({
+            el: '#root',
+            components: {
+                school,
+            },
+
+            data() {
+                return {
+                    n: 1,
+                }
+            },
+        })
+    </script>
+
+</body>
+
+</html>

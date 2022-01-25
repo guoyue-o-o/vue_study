@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!--
+
+        // 字符串
+        router.push('home')
+
+        // 对象
+        router.push({ path: 'home' })
+
+        // 命名的路由
+        router.push({ name: 'user', params: { userId: '123' }})
+
+        // 带查询参数，变成 /register?plan=private
+        router.push({ path: 'register', query: { plan: 'private' }})
+
+        例如：
+        const userId = '123'
+        router.push({ name: 'user', params: { userId }}) // -> /user/123
+        router.push({ path: `/user/${userId}` }) // -> /user/123
+        // 这里的 params 不生效
+        router.push({ path: '/user', params: { userId }}) // -> /user
+
+     -->
+
+    <div id="root">
+        <school></school>
+        <student></student>
+
+    </div>
+
+    <script>
+        // 设置为 false，阻止 vue 在启动时生成生产提示。
+        Vue.config.productionTip = false;
+
+        const student = {
+            name: 'student',
+            template: `<h1>学生</h1>`
+        }
+
+        const school = {
+            name: 'school',
+            template: `<h2>学校</h2>`
+        }
+
+        new Vue({
+            el: '#root',
+            components: {
+                school,
+                student
+            },
+
+            data() {
+                return {
+                    n: 1,
+                }
+            },
+        })
+    </script>
+
+</body>
+
+</html>

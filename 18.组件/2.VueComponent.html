@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+
+        1.VueComponent 实际是构造函数
+
+        1.school本质是VueComponent的构造函数，不是开发者定义的，是Vue.extend生成的
+        2.Vue自动生成Vue.extend(options)
+        3.注意：！！！！！
+          每次调用Vue.extend都会生成一个全新的组件
+        4.
+
+
+
+
+     -->
+
+    <div id="root">
+        <school></school>
+
+    </div>
+
+    <script>
+        // 设置为 false，阻止 vue 在启动时生成生产提示。
+        Vue.config.productionTip = false;
+
+        const student = {
+            name: 'student',
+            template: `<h1>学生</h1>`
+        }
+
+        const school = Vue.extend({
+            name: 'school',
+            template: `<h2>学校</h2>`
+        }
+)
+        console.log(111, school)
+
+        new Vue({
+            el: '#root',
+            components: {
+                school,
+            },
+
+            data() {
+                return {
+                    n: 1,
+                }
+            },
+        })
+    </script>
+
+</body>
+
+</html>
